@@ -1,17 +1,22 @@
 //index라는 명은 default uri로 만들어준다
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 
 export default function Home({ results }) {
-  // const [movies, setMovies] = useState();
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const { results } = await (await fetch(`/api/movies`)).json();
-  //     console.log("ghgg", { results });
-  //     setMovies(results);
-  //   })();
-  // }, []);
+  const router = useRouter();
+  const Click = (id, title) => {
+    router.push(
+      {
+        pathname: `/movies/${id}`,
+        query: {
+          title,
+        },
+      },
+      `/movies/${id}`
+    );
+  };
 
   return (
     <div className="container">
@@ -21,8 +26,23 @@ export default function Home({ results }) {
       {/*movies?.map((movie) => (*/}
       {results?.map((movie) => (
         <div className="movie" key={movie.id}>
-          <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-          <h4>{movie.original_title}</h4>
+          <img
+            onClick={() => Click(movie.id, movie.original_title)}
+            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          />
+          <Link
+            href={{
+              pathname: `/movies/${movie.id}`,
+              query: {
+                title: movie.original_title,
+              },
+            }}
+            as={`/movies/${movie.id}`}
+          >
+            <a>
+              <h4>{movie.original_title}</h4>
+            </a>
+          </Link>
         </div>
       ))}
       <style jsx>
