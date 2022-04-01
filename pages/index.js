@@ -8,7 +8,7 @@ export default function Home({ results }) {
   console.log("result", results);
   const router = useRouter();
   const Click = (id, title) => {
-    router.push(`/movies/${title}/${id}/hello`);
+    router.push(`/movies/${title}/${id}`);
   };
 
   return (
