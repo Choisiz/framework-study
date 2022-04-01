@@ -5,40 +5,22 @@ import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 
 export default function Home({ results }) {
+  console.log("result", results);
   const router = useRouter();
   const Click = (id, title) => {
-    router.push(
-      {
-        pathname: `/movies/${id}`,
-        query: {
-          title,
-        },
-      },
-      `/movies/${id}`
-    );
+    router.push(`/movies/${title}/${id}/hello`);
   };
 
   return (
     <div className="container">
       <Seo title="Home" />
-      {/* {!movies && <h4>Loading..</h4>} */}
-
-      {/*movies?.map((movie) => (*/}
       {results?.map((movie) => (
         <div className="movie" key={movie.id}>
           <img
             onClick={() => Click(movie.id, movie.original_title)}
             src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
           />
-          <Link
-            href={{
-              pathname: `/movies/${movie.id}`,
-              query: {
-                title: movie.original_title,
-              },
-            }}
-            as={`/movies/${movie.id}`}
-          >
+          <Link href={`/movies/${movie.original_title}/${movie.id}`}>
             <a>
               <h4>{movie.original_title}</h4>
             </a>
